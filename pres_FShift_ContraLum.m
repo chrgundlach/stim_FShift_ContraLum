@@ -43,6 +43,11 @@ KbWait(ps.RespDev,1); % wait for releasing keys on indicated response device
 
 % create keayboard queue
 KbQueueCreate(ps.RespDev)
+% dsiplay some information
+t.cols = {RDK.RDK([conmat.trials(trialindex(1)).RDKidcenter]).col};
+fprintf('\n---\nnextblockLumLevel %1.0f | %1.1f%% | cols RDK1[%1.3f %1.3f %1.3f] RDK2[%1.3f %1.3f %1.3f] backgrd[%1.3f %1.3f %1.3f]\n---', ...
+    conmat.trials(trialindex(1)).con_lumlevel, p.stim.con_lumoffset(conmat.trials(trialindex(1)).condition), ...
+    t.cols{1}(1,1:3), t.cols{2}(1,1:3), t.cols{1}(2,1:3))
 
 if flag_training~=1
     fprintf(1,'\nexperiment block %1.0f - Praesentation - Trial:', blocknum)
@@ -60,7 +65,7 @@ for i_tr = 1:numel(trialindex)
         'frames',conmat.trials(trialindex(i_tr)).post_cue_frames+conmat.trials(trialindex(i_tr)).pre_cue_frames,...
         'cue',conmat.trials(trialindex(i_tr)).pre_cue_frames+1);
     RDKin.trial.event = struct('onset',conmat.trials(trialindex(i_tr)).event_onset_frames,...
-        'direction',conmat.trials(trialindex(i_tr)).eventdirection,'RDK',conmat.trials(trialindex(i_tr)).eventRDKid);
+        'direction',conmat.trials(trialindex(i_tr)).eventdirection,'RDK',conmat.trials(trialindex(i_tr)).eventRDK);
     RDKin.RDK.RDK = RDK.RDK([conmat.trials(trialindex(i_tr)).RDKidcenter; conmat.trials(trialindex(i_tr)).RDKidperi]);
     [colmat,dotmat,dotsize,rdkidx,frames] = RDK_init_FShift_ContraLum(RDKin.scr,RDKin.Propixx,RDKin.RDK,RDKin.trial,RDKin.crs);
     

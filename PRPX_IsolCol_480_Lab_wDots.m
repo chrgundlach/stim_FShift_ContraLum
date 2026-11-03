@@ -66,7 +66,8 @@ Screen('BlendFunction', p.window,  GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 % Screen('BlendFunction', p.window,  GL_ONE, GL_ZERO); % no blending
 [p.screenXpixels, p.screenYpixels] = Screen('WindowSize', p.window); % get window size
 [p.xCenter, p.yCenter] = RectCenter(p.windowRect); % get center values of screen
-Buttons = [KbName('Q') KbName('SPACE') KbName('DownArrow') KbName('UpArrow') KbName('RightShift')];
+% Buttons = [KbName('Q') KbName('SPACE') KbName('DownArrow') KbName('UpArrow') KbName('RightShift')];
+Buttons = [KbName('Q') KbName('SPACE') KbName('n') KbName('m') KbName('RightShift')];
 RestrictKeysForKbCheck(Buttons); % allow input from all buttons
 [SECRETkey, SPACEkey, Nkey, Mkey, Startkey] = deal(...
     Buttons(1),Buttons(2),Buttons(3),Buttons(4), Buttons(5));
@@ -176,8 +177,8 @@ end
 
 % ========== Subfunctions ==============
 function [LumAdj]=DoHFP(ColFix,ColAdj,PosAdj,p) % heterochromatic flicker presentation
-% Keys=[KbName('n') KbName('m') KbName('Space')]; % [decreases luminance, increases luminance, select luminance]
-Keys=[KbName('DownArrow') KbName('UpArrow') KbName('Space')]; % [decreases luminance, increases luminance, select luminance]
+Keys=[KbName('n') KbName('m') KbName('Space')]; % [decreases luminance, increases luminance, select luminance]
+% Keys=[KbName('DownArrow') KbName('UpArrow') KbName('Space')]; % [decreases luminance, increases luminance, select luminance]
 
 % ellipse parameters
 %XRad=p.screenXpixels*0.1875; % width of ellipse
@@ -231,7 +232,7 @@ while (~key.keycode(Keys(3)) && ~key.keycode_prev(Keys(3))) || key.keycode_prev(
     if any(key.keycode(Keys(1:2))) % has increase or decrease button been pressed?
         LumAdj=max([LumAdj-key.keycode(Keys(1))*StepSize 0]); % adjust luminance
         LumAdj=min([LumAdj+key.keycode(Keys(2))*StepSize 255]); % adjust luminance
-        %disp(LumAdj)
+        % disp(LumAdj)
         ActivityCount=round(p.screen.hz/5); % map button presses to adjust step size ActivityCount=round(p.screen.hz/5);
         StepSize=min([StepSize+0.005 1]); % adjust step size of color changes StepSize=min([StepSize+1 8]);
     else
@@ -268,10 +269,10 @@ while (~key.keycode(Keys(3)) && ~key.keycode_prev(Keys(3))) || key.keycode_prev(
     end
     
     % trouble shooting display
-    %     Screen('TextSize', p.window, 20);
-    %     Screen('TextFont', p.window, 'Courier');
-    %     DrawFormattedText(p.window, ['\n\n\n\n' sprintf('%1.2f',StepSize) '\n' sprintf('%1.2f',LumAdj)],'center', 'center', [1 1 1]);
-    
+        % Screen('TextSize', p.window, 20);
+        % Screen('TextFont', p.window, 'Courier');
+        % DrawFormattedText(p.window, ['\n\n\n\n' sprintf('%1.2f',StepSize) '\n' sprintf('%1.2f',LumAdj)],'center', 'center', [1 1 1]);
+
     Screen('Flip', p.window, 0); % show background
 end
 
