@@ -44,12 +44,14 @@ p.scr_imgmultipl        = 4;
 
 % some isoluminace parameters
 p.isol.TrlAdj           = 5;                    % number of trials used for isoluminance adjustment
-p.isol.TrlAdj           = 2;                    % number of trials used for isoluminance adjustment
+% p.isol.TrlAdj           = 2;                    % number of trials used for isoluminance adjustment
 p.isol.MaxStd           = 10;                   % standard deviation tolerated
 p.isol.run              = false;                % isoluminance run?
 % p.isol.override         = [0.0980 0.0392 0 1; 0 0.0596 0.1490 1;0 0.0745 0 1]; % these are the ones used for p.isol.bckgr = p.scr_color(1:3);
-p.isol.override         = [0.0980 0.0392 0 1; 0 0.0596 0.1490 1]; % these are the ones used for p.isol.bckgr = p.scr_color(1:3);
-p.isol.override         = [0.1199 0.0506 0.0029 1.0000; 0.0165 0.0982 0.2183 1.0000]; % these are the ones used for p.isol.bckgr = p.scr_color(1:3);
+% p.isol.override         = [0.0980 0.0392 0 1; 0 0.0596 0.1490 1]; % these are the ones used for p.isol.bckgr = p.scr_color(1:3);
+% p.isol.override         = [0.1199 0.0506 0.0029 1.0000; 0.0165 0.0982 0.2183 1.0000]; % these are the ones used for p.isol.bckgr = p.scr_color(1:3);
+p.isol.override         = [0.123937832425442	0.0529802801787868	0.00303485912595384 1.0000; 
+    0.0336213112269835	0.0733747455103083	0.257247778489449 1.0000]; % same chroma (44) hue = 71 and 290 L =32
 
 % p.isol.bckgr            = p.scr_color(1:3)+0.2;          % isoluminant to background or different color?
 p.isol.bckgr            = p.scr_color;          % isoluminant to background or different color?

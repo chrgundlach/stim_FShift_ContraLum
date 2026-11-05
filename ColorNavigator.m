@@ -31,9 +31,10 @@ try
     [~,uniqueRows] = unique(round(abTable.stdRGB*255),'rows','stable');
     abTable = abTable(uniqueRows,:);
 
-    currentLightness = 31.37;
-    currentChroma = 43.58;
-    selectionHues = [70.5636  256.9666]'; % with high chroma=72, lightness=68 (0.38 grey): : orange, yellow, green, blue
+    currentLightness = round(32.7);
+    currentChroma = round(43.58);
+    selectionHues = round([70.5636  256.9666])'; % with high chroma=72, lightness=68 (0.38 grey): : orange, yellow, green, blue
+    selectionHues = round([70.5636  290])'; % with high chroma=72, lightness=68 (0.38 grey): : orange, yellow, green, blue
 
     %     selectionHues = [148 82 336 41]'; % with chroma=86, lightness=68 (0.38 grey): green, brownish, pink, reddish
     % selectionHues = [126 84 352 42 176]'; %  with chroma=72, lightness=68 (0.38 grey): green, brownish, pink, reddish, bluish
