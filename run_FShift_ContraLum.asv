@@ -37,10 +37,9 @@ p.targ_respwin          = [200 1000];           % time window for responses in m
 p.scr_num               = 1;                    % screen number
 p.scr_res               = [1920 1080];          % resolution
 p.scr_refrate           = 480;                  % refresh rate in Hz (e.g. 85)
-% p.scr_color             = [0.074 0.074 0.074 1; ...
-%                            0.0918 0.0918 0.0918 1];% default: opted for 50 cd/m² [0.083 0.083 0.083]
 p.scr_color             = [0.074 0.074 0.074 1; ...
-                           0.2918 0.2918 0.2918 1];% default: opted for 50 cd/m² [0.083 0.083 0.083]
+                           0.0918 0.0918 0.0918 1];% default: opted for 50 cd/m² [0.083 0.083 0.083]
+
 p.scr_imgmultipl        = 4;
 
 % some isoluminace parameters
@@ -70,8 +69,9 @@ p.stim.con_RDKcenter    = repmat([1 2],10,1) + [0 0 4 4 8 8 12 12 16 16]'; % def
 p.stim.con_RDKperi      = repmat([3 4],10,1) + [0 0 4 4 8 8 12 12 16 16]';
 p.stim.con_RDK2attend   = repmat([1 2],1,5)+ [0 0 4 4 8 8 12 12 16 16];    % defines which RDK to attend in which condition
 p.stim.con_bckground    = [ones(1,8) 2 2];
-% p.stim.con_lumoffset    = [0 0 8 8 16 16 24 24 0 0];
-p.stim.con_lumoffset    = [0 0 80 80 100 100 150 150 0 0]; % test
+p.stim.con_lumoffset    = [0 0 8 8 16 16 24 24 0 0];
+p.stim.con_lumoffset    = [0 0 8 8 16 16 24 24 0 0]./1.1162; % scaling factor for candela scaling
+% p.stim.con_lumoffset    = [0 0 80 80 100 100 150 150 0 0]; % test
 p.stim.con_block        = [1 1 2 2 3 3 4 4 5 5];
 p.stim.eventnum_e       = [0 0 0 0 1 2];        % ratio of eventnumbers for experiment
 p.stim.eventnum_t       = [0 1 2];        % ratio of eventnumbers for training
@@ -131,7 +131,7 @@ p.stim.color_names      = {'redish';'blue'};
  
 RDK.event.type          = 'globalmotion';       % event type global motion
 RDK.event.duration      = p.stim.event.length;  % time of coherent motion
-RDK.event.coherence     = .8;                   % percentage of coherently moving dots 0.4 [changed from 0.4 to 0.3 to 0.4]
+RDK.event.coherence     = .4;                   % percentage of coherently moving dots 0.4 [changed from 0.4 to 0.3 to 0.4]
 RDK.event.direction     = RDK.RDK(1).mov_dir;   % movement directions for events
 
 % fixation cross
@@ -387,7 +387,7 @@ else
             t.cols = cell2mat({t.isol{t.idx}.RDKadj(:).col}');
             isol.opt(2).colors = t.cols(1:2:end,:);
             % isol.opt(2).text = sprintf('aus gespeicherter Datei: %s',sprintf('[%1.2f %1.2f %1.2f] ',isol.opt(2).colors(:,1:3)'));
-            isol.opt(2).text = sprintf('aus gespeicherter Datei: %s',sprintf('[%1.2f %1.2f %1.2f] ',isol.opt(2).colors(1:,1:3)'));
+            isol.opt(2).text = sprintf('aus gespeicherter Datei alte Iso: %s',sprintf('[%1.2f %1.2f %1.2f] ',isol.opt(2).colors(1:2,1:3)'));
         else
             isol.opt(2).available = false;
             isol.opt(2).colors = [];

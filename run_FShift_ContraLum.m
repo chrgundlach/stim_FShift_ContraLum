@@ -69,7 +69,8 @@ p.stim.con_RDKcenter    = repmat([1 2],10,1) + [0 0 4 4 8 8 12 12 16 16]'; % def
 p.stim.con_RDKperi      = repmat([3 4],10,1) + [0 0 4 4 8 8 12 12 16 16]';
 p.stim.con_RDK2attend   = repmat([1 2],1,5)+ [0 0 4 4 8 8 12 12 16 16];    % defines which RDK to attend in which condition
 p.stim.con_bckground    = [ones(1,8) 2 2];
-p.stim.con_lumoffset    = [0 0 8 8 16 16 24 24 0 0];
+p.stim.con_lumoffset    = [0 0 8 8 16 16 24 24 0 0]; % this scales the *L values --> leads to larger candela changes
+p.stim.con_lumoffset    = [0 0 8 8 16 16 24 24 0 0].*0.4621; % scaling factor for candela scaling
 % p.stim.con_lumoffset    = [0 0 80 80 100 100 150 150 0 0]; % test
 p.stim.con_block        = [1 1 2 2 3 3 4 4 5 5];
 p.stim.eventnum_e       = [0 0 0 0 1 2];        % ratio of eventnumbers for experiment
@@ -251,6 +252,9 @@ p.isol.WP=[0.3127 0.3290 1-0.3127-0.3290]; %D65
 t.cols_lab = repmat( ... % what are the CIE LAB colors?
     xyz2lab(rgb2xyz_custom([RDK.RDK(1).col(1,1:3); RDK.RDK(2).col(1,1:3)],p.isol.R,p.isol.G,p.isol.B,p.isol.WP)), ...
     numel(p.stim.condition),1);
+t.cols_LCh        = [t.cols_lab(:,1),...
+            hypot(t.cols_lab(:,2),t.cols_lab(:,3)),...
+            mod(atan2d(t.cols_lab(:,3),t.cols_lab(:,2)) + 360, 360)]; 
 t.cols_bckgr_rgb = p.scr_color(reshape(repmat(p.stim.con_bckground,2,1),1,[]),1:3); % background RGBs
 t.cols_bckgr_lab = xyz2lab(rgb2xyz_custom(t.cols_bckgr_rgb,p.isol.R,p.isol.G,p.isol.B,p.isol.WP)); % background LAB
 t.cols_new_lum =  t.cols_bckgr_lab(:,1) .* (1+reshape(repmat(p.stim.con_lumoffset,2,1),1,[])/100)'; %new luminance values
