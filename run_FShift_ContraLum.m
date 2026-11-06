@@ -262,6 +262,9 @@ t.cols_bckgr_lab = xyz2lab(rgb2xyz_custom(t.cols_bckgr_rgb,p.isol.R,p.isol.G,p.i
 t.cols_new_lum =  t.cols_bckgr_lab(:,1) .* (1+reshape(repmat(p.stim.con_lumoffset,2,1),1,[])/100)'; %new luminance values
 t.cols_new_lab = [t.cols_new_lum t.cols_lab(:,2:end)];
 t.cols_new_rgb = xyz2rgb_custom(lab2xyz(t.cols_new_lab),p.isol.R,p.isol.G,p.isol.B,p.isol.WP); % final RGB values
+t.cols_new_LCh = [t.cols_new_lab(:,1),...
+            hypot(t.cols_new_lab(:,2),t.cols_new_lab(:,3)),...
+            mod(atan2d(t.cols_new_lab(:,3),t.cols_new_lab(:,2)) + 360, 360)]; 
 % write everything into RDK
 for i_rdk=1:numel(RDK.RDK)
     RDK.RDK(i_rdk).col(1,1:3) = t.cols_new_rgb(i_rdk,:); % rdk 
@@ -293,7 +296,8 @@ if p.flag_training
         [timing.training{i_bl},button_presses.training{i_bl},resp.training{i_bl}] = ...
             pres_FShift_ContraLum(p, ps, key, RDK, randmat.training{i_bl}, i_bl,1);
         save(sprintf('%s%s',p.log.path,p.filename),'timing','button_presses','resp','randmat','p', 'RDK')
-        pres_feedback(resp.training{i_bl},p,ps, key,RDK)
+        % pres_feedback(resp.training{i_bl},p,ps, key,RDK)
+        pres_feedback_withspace(resp.training{i_bl},p,ps, key,RDK)
                
         % loop for training to be repeated
         fprintf(1,'\nTraing wiederholen? (j/n)')
@@ -507,7 +511,8 @@ while flag_trainend == 0 % do training until ended
     [timing.training{i_bl},button_presses.training{i_bl},resp.training{i_bl}] = ...
         pres_FShift_ContraLum(p, ps, key, RDK, randmat.training{i_bl}, i_bl,1);
     save(sprintf('%s%s',p.log.path,p.filename),'timing','button_presses','resp','randmat','p', 'RDK')
-    pres_feedback(resp.training{i_bl},p,ps, key,RDK)
+    % pres_feedback(resp.training{i_bl},p,ps, key,RDK)
+    pres_feedback_withspace(resp.training{i_bl},p,ps, key,RDK)
     
     % loop for training to be repeated
     fprintf(1,'\nTraing wiederholen? (j/n)')
