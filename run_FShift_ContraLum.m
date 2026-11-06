@@ -542,7 +542,8 @@ for i_bl = p.flag_block:p.stim.blocknum
     % save logfiles
     save(sprintf('%s%s',p.log.path,p.filename),'timing','button_presses','resp','randmat','p', 'RDK')
           
-    pres_feedback(resp.experiment{i_bl},p,ps, key, RDK)    
+    % pres_feedback(resp.experiment{i_bl},p,ps, key, RDK)    
+    pres_feedback_withspace(resp.experiment{i_bl},p,ps, key, RDK)    
 end
 
 fprintf(1,'\n\nENDE\n')
